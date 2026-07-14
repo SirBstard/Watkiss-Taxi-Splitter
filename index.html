@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -250,7 +249,7 @@
     <label>Starting Point Route Option</label>
     <div class="start-selector">
         <button type="button" id="startGPS" class="start-btn" onclick="setStartLocation('GPS')">📍 GPS Location</button>
-        <button type="button" id="startHome" class="start-btn" onclick="setStartLocation('Home')">🏠 Home (SY13)</button>
+        <button type="button" id="startHome" class="start-btn" onclick="setStartLocation('Home')">🏠 Home (SY23)</button>
         <button type="button" id="startDirect" class="start-btn active" onclick="setStartLocation('Direct')">⚡ Direct Run (A→B)</button>
     </div>
 
@@ -320,7 +319,7 @@
     let globalA = "";
     let globalB = "";
     let selectedStartMode = "Direct"; 
-    const HOME_POSTCODE = "SY13 4BJ";
+    const HOME_POSTCODE = "SY23 4BJ"; // Corrected home postcode
     
     let currentTariffMode = "Standard1";
     let isAutoMode = true;
@@ -457,7 +456,7 @@
         
         let chosenRoute = data.routes[0];
 
-        // Ensure we prioritize motorway and main A-road fast routes over tight country shortcuts
+        // Ensure we prioritize motorway and main A-road routes over tight country lanes where logical
         if (data.routes.length > 1) {
             let bestScore = Infinity;
             
@@ -465,7 +464,7 @@
                 const distanceMiles = (route.distance * 0.000621371);
                 const durationMinutes = (route.duration / 60);
                 
-                // Fast roads scoring: penalize slow back roads to keep you on the major routes
+                // Balance distance detour with driving speed
                 const score = (distanceMiles * 1.0) + durationMinutes; 
                 
                 if (score < bestScore) {
